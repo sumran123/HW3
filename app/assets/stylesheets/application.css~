@@ -1,4 +1,5 @@
 /* Simple CSS styling for RottenPotatoes app */
+%p{:class =>"hilite"}
 html, body {
   margin: 0;
   padding: 0;
