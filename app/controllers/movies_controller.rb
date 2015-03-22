@@ -4,6 +4,24 @@
 class MoviesController < ApplicationController
 
   def index
+    
+
+    @all_ratings=Movie.all_rating;
+    @ratings = {}
+    if params[:ratings] != nil and session[:ratings] != nil
+      @ratings = params[:ratings].keys
+      session[:ratings]=@ratings
+      #redirect_to(movies_path(:ratings => session[:ratings]))
+    elsif params[:ratings] != nil and session[:ratings] == nil
+      @ratings = params[:ratings].keys
+      session[:ratings]=@ratings
+    elsif params[:ratings] == nil and session[:ratings] != nil
+      @ratings= session[:ratings]
+    elsif params[:ratings] == nil and session[:ratings] == nil
+      @ratings=@all_ratings
+      #redirect_to(movies_path(:ratings => session[:ratings]))
+    end
+    session[:ratings]=@ratings
     par=params[:column_index]
     @title_=""
     @Release_date_=""
@@ -14,9 +32,16 @@ class MoviesController < ApplicationController
       @title_="";
       @Release_date_="hilite";
     end
-    @movies = Movie.order(par).all
+    if par ==nil and session[:column_index] !=nil 
+    par = session[:column_index]
+    end
+    session[:column_index]=par
+      @movies = Movie.order(par).all
+    if(@ratings.size()>0)
+     @movies = Movie.find(:all,:conditions => {:rating => @ratings}, :order => par)
+   end
   end
-
+  
   def show
     id = params[:id] # retrieve movie ID from URI route
 
