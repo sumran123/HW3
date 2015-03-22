@@ -1,5 +1,5 @@
 /* Simple CSS styling for RottenPotatoes app */
-
+%p{:class =>"hilite"}
 html, body {
   margin: 0;
   padding: 0;
@@ -34,6 +34,7 @@ h1.title {
   border-bottom: 4px solid gold;
   font-size: 2em;
   font-style: normal;
+  
 }
 table#movies {
   margin: 10px;

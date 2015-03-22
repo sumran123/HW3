@@ -1,12 +1,25 @@
 # This file is app/controllers/movies_controller.rb
+#RottenPotatoes' app/assets/stylesheets/application.css file.
+
 class MoviesController < ApplicationController
 
   def index
-    @movies = Movie.all
+    par=params[:column_index]
+    @title_=""
+    @Release_date_=""
+    if par=="title"
+      @title_="hilite"
+      @Release_date_=""
+    elsif par=="Release_Date"
+      @title_="";
+      @Release_date_="hilite";
+    end
+    @movies = Movie.order(par).all
   end
 
   def show
     id = params[:id] # retrieve movie ID from URI route
+
     @movie = Movie.find(id) # Look up movie by unique ID
     # will render app/views/movies/show.<extension> by default
   end
